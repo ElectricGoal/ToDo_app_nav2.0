@@ -39,10 +39,12 @@ class AddTaskScreen extends StatelessWidget {
               textAlign: TextAlign.center,
               decoration: InputDecoration(
                 hintText: 'Task name',
-                errorText: validate ? 'Value cannot be empty' : null,
+                errorText: validate ? 'Task name cannot be empty' : null,
               ),
             ),
-            SizedBox(
+            // Important note: should use const everywhere use can cuz it's benefit.
+            // Keyword to search: const constructor in Dart
+            const SizedBox(
               height: 40,
             ),
             TextFormField(

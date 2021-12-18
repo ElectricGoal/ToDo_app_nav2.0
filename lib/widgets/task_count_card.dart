@@ -8,16 +8,23 @@ class TaskCountCard extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  
-
-  @override
-  Widget build(BuildContext context) {
-    String countTask(int count) {
+  String countTask(int count) {
     if (count == 0) {
       return 'No task to do';
     }
-    return count.toString() + ' tasks';
+    // return count.toString() + ' tasks';
+    return '$count tasks';
   }
+
+  @override
+  Widget build(BuildContext context) {
+    // Phuc: What is the purpose of delaring function inside build function ?
+    //   String countTask(int count) {
+    //   if (count == 0) {
+    //     return 'No task to do';
+    //   }
+    //   return count.toString() + ' tasks';
+    // }
     return Container(
       margin: EdgeInsets.only(bottom: 20),
       height: SizeConfig.heightMultiplier * 15,

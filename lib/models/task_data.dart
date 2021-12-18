@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:todo/models/task.dart';
 import 'package:uuid/uuid.dart';
 
-var uuid = Uuid();
+// var uuid = Uuid();
+// Important note: use final everytime you can. Lower priority than const but higher than var
+final uuid = Uuid();
 
 class TaskData extends ChangeNotifier {
   int countCompletedTask = 0;
@@ -29,6 +31,8 @@ class TaskData extends ChangeNotifier {
   ];
 
   //check task có tồn tại trong list không
+  // Better naming for example: isTaskExisted
+  // Keyword to improve: should read more code of google's team app
   bool checkExistTask(String taskId) {
     final int count = tasks.length;
     tasks = [...tasks]..removeWhere((t) => t.id == taskId);
@@ -39,6 +43,10 @@ class TaskData extends ChangeNotifier {
     return true;
   }
 
+  // better naming
+  // addTask means create new task so we should add "new" keyword to
+  // "newTaskName" or "newTaskDescrip"
+  // => addTask(String name, String description)
   void addTask(String newTaskName, String newTaskDescrip) {
     final task = Task(
       name: newTaskName,
@@ -46,7 +54,8 @@ class TaskData extends ChangeNotifier {
       isDone: false,
       id: uuid.v1(),
     );
-    tasks = [...tasks]..insert(0, task);
+    // tasks = [...tasks]..insert(0, task);
+    tasks = [task, ...tasks];
     notifyListeners();
   }
 
@@ -61,10 +70,12 @@ class TaskData extends ChangeNotifier {
     final Task updatedTask;
     if (task.isDone == false) {
       updatedTask = task.copyWith(isDone: true);
-      tasks = [...tasks]..add(updatedTask);
+      // tasks = [...tasks]..add(updatedTask);
+      tasks = [...tasks, updatedTask];
     } else {
       updatedTask = task.copyWith(isDone: false);
       tasks = [...tasks]..insert(0, updatedTask);
+      tasks = [updatedTask, ...tasks];
     }
 
     notifyListeners();

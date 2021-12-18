@@ -37,7 +37,6 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<AppRoute>(create: (context) => AppRoute()),
       ],
       child: LayoutBuilder(builder: (context, constraints) {
-        
         var createNewTask = context.watch<AppRoute>().createNewTask;
         var selectedTask = context.watch<AppRoute>().selectedTask;
 
@@ -49,16 +48,20 @@ class _MyAppState extends State<MyApp> {
 
         void handleAddNewTask() {
           setState(() {
-            nameController.text.isEmpty ? validate = true : validate = false;
+            // nameController.text.isEmpty ? validate = true : validate = false;
+            validate = nameController.text.isEmpty;
           });
-          if (validate == false) {
+          // if (validate == false) {
+          if (!validate) {
             context
                 .read<TaskData>()
                 .addTask(nameController.text, descriptionController.text);
+            nameController.clear();
+            descriptionController.clear();
             setState(() {
               context.read<AppRoute>().createNewTask = false;
-              nameController.clear();
-              descriptionController.clear();
+              // nameController.clear();
+              // descriptionController.clear();
             });
           }
         }
@@ -79,8 +82,8 @@ class _MyAppState extends State<MyApp> {
                   createNewTask: handleCreateNewTask,
                 ),
               ),
-
-              if (createNewTask != false && selectedTask == null)
+              // if (createNewTask != false && selectedTask == null)
+              if (createNewTask && selectedTask == null)
                 MaterialPage(
                   key: ValueKey('AddTaskScreen'),
                   child: AddTaskScreen(
@@ -90,15 +93,14 @@ class _MyAppState extends State<MyApp> {
                     onTap: handleAddNewTask,
                   ),
                 ),
-
-              if (selectedTask != null && createNewTask == false)
+              // if (selectedTask != null && createNewTask == false)
+              if (selectedTask != null && !createNewTask)
                 MaterialPage(
                   key: ValueKey('AddTaskScreen'),
                   child: TaskDetailScreen(
                     task: context.watch<AppRoute>().selectedTask,
                   ),
                 ),
-                
             ],
             onPopPage: (route, result) {
               if (!route.didPop(result)) return false;

@@ -5,9 +5,10 @@ import 'package:todo/size_config.dart';
 class TaskDetailScreen extends StatelessWidget {
   const TaskDetailScreen({
     Key? key,
-    required this.task,
+    this.task,
   }) : super(key: key);
 
+  // Shouldn't mark required to a nullable variable
   final Task? task;
 
   @override
@@ -16,7 +17,7 @@ class TaskDetailScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: Text(
-          task!.name!,
+          task?.name ?? '-',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -46,7 +47,7 @@ class TaskDetailScreen extends StatelessWidget {
                 if (task != null)
                   Expanded(
                     child: Text(
-                      task!.descrip != null ? task!.descrip! : ' ',
+                      task!.descrip ?? '-',
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w300,

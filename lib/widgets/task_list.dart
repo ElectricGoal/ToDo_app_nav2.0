@@ -61,14 +61,16 @@ class TaskTile extends StatelessWidget {
           color: Colors.red,
           caption: 'Delete',
           onTap: () {
-            taskData.deleteTask(task.id!);
+            if (task.id != null) {
+              taskData.deleteTask(task.id!);
+            }
           },
           icon: Icons.delete,
         )
       ],
       child: ListTile(
         title: Text(
-          task.name!,
+          task.name ?? '-',
           style: TextStyle(
             decoration: task.isDone! ? TextDecoration.lineThrough : null,
           ),
@@ -78,7 +80,7 @@ class TaskTile extends StatelessWidget {
           value: task.isDone,
           onChanged: (checkBoxState) {
             //taskData.upTask(task);
-            if (taskData.upgradeTask(task) == false) {
+            if (!taskData.upgradeTask(task)) {
               final snackBar = SnackBar(
                 content: Text('Something went wrong!'),
               );
